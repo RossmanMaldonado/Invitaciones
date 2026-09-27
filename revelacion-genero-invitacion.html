@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>¿Niño o Niña? — Rossman & Leidy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --cream:#FAF6EE; --ink:#2B2A28; --ink-soft:#5B5750;
+    --blue:#6E9BC2; --blue-deep:#3F6E96;
+    --pink:#E39CB2; --pink-deep:#C25C80;
+    --gold:#B8933A;
+    --card-bg:#FFFDF8;
+    --line:#E3DCCC;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --cream:#211E28; --ink:#F3EEE3; --ink-soft:#C9C2B4;
+      --card-bg:#2A2632; --line:#443F4E;
+      --blue:#8FB4D6; --blue-deep:#6E9BC2;
+      --pink:#EAB0C1; --pink-deep:#D97D98;
+    }
+  }
+  :root[data-theme="dark"]{
+    --cream:#211E28; --ink:#F3EEE3; --ink-soft:#C9C2B4;
+    --card-bg:#2A2632; --line:#443F4E;
+    --blue:#8FB4D6; --blue-deep:#6E9BC2;
+    --pink:#EAB0C1; --pink-deep:#D97D98;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  body{
+    background:var(--cream); color:var(--ink);
+    font-family:'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+    line-height:1.55;
+  }
+  h1,h2,.display{font-family:'Fraunces', 'Iowan Old Style', 'Palatino Linotype', serif;}
+  .wrap{max-width:640px; margin:0 auto; padding:0 24px;}
+
+  /* Hero */
+  .hero{
+    position:relative; overflow:hidden;
+    padding:72px 24px 56px;
+    text-align:center;
+    background:linear-gradient(120deg, var(--blue) 0%, var(--blue) 46%, var(--pink) 54%, var(--pink) 100%);
+  }
+  .hero::before{
+    content:"?";
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-46%);
+    font-family:'Fraunces', serif; font-weight:700;
+    font-size:min(70vw, 480px);
+    color:rgba(255,255,255,0.14);
+    line-height:1; pointer-events:none; user-select:none;
+  }
+  .hero-inner{position:relative; z-index:1;}
+  .eyebrow-img{font-size:2.4rem; margin-bottom:6px;}
+  .hero h1{
+    color:#FFFDF8; font-weight:700;
+    font-size:clamp(2.4rem, 9vw, 3.6rem);
+    letter-spacing:-0.01em;
+  }
+  .hero p{
+    color:#FFFDF8; opacity:0.95;
+    font-size:clamp(1.05rem, 3.4vw, 1.25rem);
+    margin-top:14px; font-weight:500;
+  }
+
+  /* Sections */
+  section{padding:44px 0;}
+  .details{text-align:center; border-bottom:1px solid var(--line);}
+  .details .when{
+    font-family:'Fraunces', serif; font-weight:600;
+    font-size:clamp(1.4rem, 5vw, 1.8rem);
+  }
+  .details .where{color:var(--ink-soft); margin-top:6px; font-size:1.05rem;}
+
+  .choice-title{
+    text-align:center; font-weight:600;
+    font-size:clamp(1.5rem, 5vw, 1.9rem);
+    margin-bottom:8px;
+  }
+  .choice-sub{text-align:center; color:var(--ink-soft); max-width:44ch; margin:0 auto 28px;}
+  .choices{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:520px){ .choices{grid-template-columns:1fr;} }
+  .choice-card{
+    background:var(--card-bg); border:1px solid var(--line); border-radius:18px;
+    padding:26px 20px; text-align:center;
+  }
+  .choice-card.boy{border-top:4px solid var(--blue-deep);}
+  .choice-card.girl{border-top:4px solid var(--pink-deep);}
+  .choice-card h3{font-size:1.15rem; font-weight:600; margin-bottom:10px;}
+  .choice-card.boy h3{color:var(--blue-deep);}
+  .choice-card.girl h3{color:var(--pink-deep);}
+  .choice-card p{font-size:0.98rem; color:var(--ink-soft); margin-top:6px;}
+
+  /* Countdown */
+  .countdown-wrap{text-align:center; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .countdown-wrap h2{font-weight:600; font-size:clamp(1.3rem, 4.6vw, 1.6rem); margin-bottom:22px;}
+  .countdown{display:flex; justify-content:center; gap:10px; flex-wrap:wrap;}
+  .cbox{
+    min-width:68px; padding:14px 8px;
+    background:linear-gradient(160deg, var(--blue) 0%, var(--pink) 100%);
+    border-radius:14px; color:#fff;
+  }
+  .cbox .num{font-family:'Fraunces', serif; font-weight:700; font-size:1.7rem; display:block;}
+  .cbox .lbl{font-size:0.72rem; opacity:0.9;}
+
+  /* RSVP */
+  .rsvp{text-align:center;}
+  .rsvp h2{font-weight:600; font-size:clamp(1.3rem, 4.6vw, 1.6rem); margin-bottom:10px;}
+  .rsvp p{color:var(--ink-soft); margin-bottom:26px;}
+  .btn-row{display:flex; flex-direction:column; gap:12px; align-items:center;}
+  .btn{
+    display:inline-block; text-decoration:none;
+    padding:14px 30px; border-radius:999px; font-weight:600; font-size:1rem;
+    transition:transform .15s ease;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{background:var(--ink); color:var(--cream);}
+  .btn-secondary{background:transparent; color:var(--ink); border:1px solid var(--line);}
+
+  footer{
+    text-align:center; padding:40px 24px calc(40px + env(safe-area-inset-bottom,0px));
+    color:var(--ink-soft); font-size:0.92rem;
+  }
+  footer .names{font-family:'Fraunces', serif; font-weight:600; color:var(--ink); font-size:1.15rem; display:block; margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="hero-inner wrap">
+      <div class="eyebrow-img">👶</div>
+      <h1>¿Niño o Niña?</h1>
+      <p>Rossman &amp; Leidy te invitan a descubrirlo</p>
+    </div>
+  </div>
+
+  <section class="details">
+    <div class="wrap">
+      <div class="when">Domingo 11 de octubre · 2:00 p. m.</div>
+      <div class="where">Parque El Tunal, Bogotá</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="choice-title">¿Tú qué crees que es?</div>
+      <p class="choice-sub">Ven vestido del color de tu apuesta y trae tu voto en forma de regalo.</p>
+      <div class="choices">
+        <div class="choice-card boy">
+          <h3>Creo que es niño</h3>
+          <p>Viste algo azul</p>
+          <p>Trae un paquete de pañales</p>
+        </div>
+        <div class="choice-card girl">
+          <h3>Creo que es niña</h3>
+          <p>Viste algo rosado</p>
+          <p>Trae un paquete de pañitos húmedos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="countdown-wrap">
+    <div class="wrap">
+      <h2>Faltan para el gran día</h2>
+      <div class="countdown" id="countdown">
+        <div class="cbox"><span class="num" id="cd-d">–</span><span class="lbl">días</span></div>
+        <div class="cbox"><span class="num" id="cd-h">–</span><span class="lbl">horas</span></div>
+        <div class="cbox"><span class="num" id="cd-m">–</span><span class="lbl">min</span></div>
+        <div class="cbox"><span class="num" id="cd-s">–</span><span class="lbl">seg</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rsvp">
+    <div class="wrap">
+      <h2>Confirma tu asistencia</h2>
+      <p>Escríbenos por WhatsApp o revisa cómo llegar al parque.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" id="wa-btn" href="#" target="_blank" rel="noopener">Confirmar por WhatsApp</a>
+        <a class="btn btn-secondary" href="https://www.google.com/maps/search/?api=1&query=Parque+El+Tunal%2C+Bogot%C3%A1" target="_blank" rel="noopener">Cómo llegar</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="names">Rossman &amp; Leidy</span>
+    Te esperamos para celebrar juntos
+  </footer>
+
+<script>
+  // WhatsApp RSVP link
+  var msg = "Hola, confirmo mi asistencia a la revelación de género de Rossman y Leidy el 11 de octubre en el Parque El Tunal.";
+  document.getElementById('wa-btn').href = "https://wa.me/573105576747?text=" + encodeURIComponent(msg);
+
+  // Countdown to Oct 11 2026, 2:00pm Bogotá time (UTC-5)
+  var target = new Date("2026-10-11T14:00:00-05:00").getTime();
+  function tick(){
+    var now = new Date().getTime();
+    var diff = target - now;
+    var d = document.getElementById('cd-d');
+    var h = document.getElementById('cd-h');
+    var m = document.getElementById('cd-m');
+    var s = document.getElementById('cd-s');
+    if(diff <= 0){
+      d.textContent = h.textContent = m.textContent = s.textContent = "0";
+      return;
+    }
+    d.textContent = Math.floor(diff / 86400000);
+    h.textContent = Math.floor((diff % 86400000) / 3600000);
+    m.textContent = Math.floor((diff % 3600000) / 60000);
+    s.textContent = Math.floor((diff % 60000) / 1000);
+  }
+  tick();
+  setInterval(tick, 1000);
+</script>
+</body>
+</html>
